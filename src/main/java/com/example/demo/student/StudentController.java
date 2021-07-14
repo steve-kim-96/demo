@@ -39,8 +39,8 @@ public class StudentController {
     @PutMapping(path = "{studentId}")
     public void updateStudent (
             @PathVariable("studentId") Long studentId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email
+            @RequestParam(required = false) String name, // can I figure out how to do this with request body???
+            @RequestParam(required = false) String email // can I figure out how to do this with request body???
             ) {
         studentService.updateStudent(studentId, name, email);
     }

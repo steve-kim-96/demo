@@ -54,7 +54,7 @@ public class StudentService {
             if (studentOptional.isPresent()) {
                 throw new IllegalStateException("Email is already taken");
             }
-            student.setEmail(email);
+
         }
 
     }
