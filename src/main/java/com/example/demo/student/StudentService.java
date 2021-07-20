@@ -1,6 +1,7 @@
 package com.example.demo.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,26 +42,11 @@ public class StudentService {
     }
 
 
-    @Transactional
-    public void updateStudent(Long studentId, String name, String email) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Student with id " + studentId + " does not exist"));
-
-        if (name != null &&
-                name.length() > 0 &&
-                !Objects.equals(student.getName(), name)) {
-            student.setName(name);
-        }
-
-        if (email != null &&
-                email.length() > 0 &&
-                !Objects.equals(student.getEmail(), email)) {
-            Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
-            if (studentOptional.isPresent()) {
-                throw new IllegalStateException("Email is already taken");
-            }
-
-        }
+    public Optional<Student> updateStudent(Long id, Student student) {
+        return studentRepository.findById(id).map(student1 -> {
+            student1.setName(student.getName());
+            return studentRepository.save(student1);
+        });
     }
 }
+

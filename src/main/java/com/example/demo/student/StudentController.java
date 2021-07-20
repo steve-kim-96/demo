@@ -4,8 +4,8 @@ package com.example.demo.student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-
 
 @RestController
 @RequestMapping(path = "api/v1/student")
@@ -36,12 +36,8 @@ public class StudentController {
         studentService.deleteStudent(studentId);
     }
 
-    @PutMapping(path = "{studentId}")
-    public void updateStudent (
-            @PathVariable("studentId") Long studentId,
-            @RequestParam(required = false) String name, // can I figure out how to do this with request body???
-            @RequestParam(required = false) String email // can I figure out how to do this with request body???
-            ) {
-        studentService.updateStudent(studentId, name, email);
+    @PutMapping(path = "{id}")
+    public void updateStudent (@PathVariable Long id, @RequestBody Student student) {
+        studentService.updateStudent(id, student);
     }
 }
