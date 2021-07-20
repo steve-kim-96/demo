@@ -1,12 +1,9 @@
 package com.example.demo.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -44,8 +41,16 @@ public class StudentService {
 
     public Optional<Student> updateStudent(Long id, Student student) {
         return studentRepository.findById(id).map(student1 -> {
-            student1.setName(student.getName());
-            return studentRepository.save(student1);
+            if (student.getName() != null) {
+                student1.setName(student.getName());
+                studentRepository.save(student1);
+            }
+
+            if (student.getEmail() != null) {
+                student1.setEmail(student.getEmail());
+                studentRepository.save(student1);
+            }
+            return student1;
         });
     }
 }
